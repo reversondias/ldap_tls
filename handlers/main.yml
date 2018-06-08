@@ -1,2 +1,7 @@
 ---
 # handlers file for ldap_tls
+- name: Restart slapd
+  systemd:
+    name: slapd
+    state: restarted 
+    enabled: yes

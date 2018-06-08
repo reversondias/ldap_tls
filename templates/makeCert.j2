@@ -1,0 +1,25 @@
+#!/bin/bash
+
+#Createing index.txt to store info aboute certificates
+touch /etc/pki/CA/index.txt
+
+#Start serial certificates
+echo 1000 > /etc/pki/CA/serial
+
+#Making CA Key
+openssl genrsa -aes256 -passout pass:root123 -out /etc/pki/CA/private/cakey.pem
+
+#Making CA Certifiate
+openssl req -key /etc/pki/CA/private/cakey.pem -new -x509 -days 7300 -passin pass:root123 -out /etc/pki/CA/cacert.pem -subj "/C=BR/ST=Sao Paulo/L=Sao Paulo/O=localLab/OU=TI/CN=ca.local.lab"
+
+#Making Certificate Key
+openssl genrsa -aes256 -passout pass:root123 -out servkey_wp.pem
+
+#Remove pass Key
+openssl rsa -passin pass:root123 -in servkey_wp.pem -out servkey.pem 
+
+#Generating request Certificate
+openssl req -key servkey.pem -new -passin pass:root123 -out newreq.csr -subj "/C=BR/ST=Sao Paulo/L=Sao Paulo/O=localLab/OU=TI/CN=ldap.local.lab"
+
+#Sign Server Certificate
+openssl ca -days 375 -notext -passin pass:root123 -batch -in newreq.csr -out servcert.pem

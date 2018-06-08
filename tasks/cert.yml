@@ -1,0 +1,30 @@
+---
+- name: Generate certificate scritp
+  template:
+    src: makeCert.j2
+    dest: /tmp/makeCert.sh
+    mode: 600
+
+- name: Generate Certificates
+  shell: /tmp/makeCert.sh
+
+- name: Distribute Server Certificate
+  copy:
+    src: /tmp/servcert.pem
+    dest: /etc/openldap/certs/
+    user: ldap
+    mode: 400
+
+- name: Distribute Server Key
+  copy:
+    src: /tmp/servkey.pem
+    dest: /etc/openldap/certs/
+    user: ldap
+    mode: 400
+
+- name: Distribute CA Certificate
+  copy:
+    src: /etc/pki/CA/cacert.pem
+    dest: /etc/openldap/certs/
+    user: ldap
+    mode: 400

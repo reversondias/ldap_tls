@@ -1,0 +1,19 @@
+---
+- name: Import schemas
+  shell: ldapadd -Y EXTERNAL -H ldapi:/// -f "{{ item }}"
+  with_items:
+    - /etc/openldap/schema/cosine.ldif
+    - /etc/openldap/schema/nis.ldif
+    - /etc/openldap/schema/inetorgperson.ldif
+
+- name: Create scritp to make ldap configurations
+  template:
+    src: makeLdif.j2
+    dest: /tmp/makeLdif.sh
+    mode: 600
+
+- name: Add configurations to domain ldap
+  shell: /tmp/makeLdif.sh >> /tmp/changesLdap.ldif
+
+- name: Execute ldapmodify
+  shell: ldapmodify -Y EXTERNAL -H ldapi:/// -f /tmp/changesLdap.ldif 

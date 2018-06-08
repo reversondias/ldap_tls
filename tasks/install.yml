@@ -1,0 +1,10 @@
+---
+- name: Install Open Ldap
+  yum:
+    name: "{{ item }}"
+    state: present 
+  with_items:
+    - openldap-servers
+    - openldap-clients
+  notify: 
+    - Restart slapd
