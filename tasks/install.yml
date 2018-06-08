@@ -6,5 +6,9 @@
   with_items:
     - openldap-servers
     - openldap-clients
-  notify: 
-    - Restart slapd
+
+- name: Restart slapd
+  systemd:
+    name: slapd
+    state: started 
+    enabled: yes
