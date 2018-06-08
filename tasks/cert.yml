@@ -26,5 +26,5 @@
   copy:
     src: /etc/pki/CA/cacert.pem
     dest: /etc/openldap/certs/
-    user: ldap
+    owner: ldap
     mode: 400
