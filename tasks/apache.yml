@@ -14,6 +14,15 @@
     regexp: 'Options Indexes'
     line: 'Options +Indexes'
 
+- name: Test if exist welcome.conf
+  stat:
+   path: /etc/httpd/conf.d/welcome.conf
+  register: state
+
+- name: Move welcome.conf to welcome.conf.bkp
+  command: mv /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.conf.bkp
+  when: state.stat.exists
+
 - name: Restart Apache Service after configurations
   systemd:
     name: httpd
