@@ -6,5 +6,11 @@
 
 - name: Execute ldapmodify to config TLS
   shell: ldapmodify -Y EXTERNAL -H ldapi:/// -f /tmp/enable_tls.ldif
+
+- name: Configure ldaps on slapd file service
+  lineinfile:
+    path: /etc/sysconfig/slapd
+    regexp: 'SLAPD_URLS="ldapi:/// ldap:///"'
+    line: 'SLAPD_URLS="ldapi:/// ldap:/// ldaps:///"'
   notify:
     - Restart slapd
