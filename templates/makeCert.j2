@@ -7,19 +7,19 @@ touch /etc/pki/CA/index.txt
 echo 1000 > /etc/pki/CA/serial
 
 #Making CA Key
-openssl genrsa -aes256 -passout pass:root123 -out /etc/pki/CA/private/cakey.pem
+openssl genrsa -aes256 -passout pass:{{ pass_ca }} -out /etc/pki/CA/private/cakey.pem
 
 #Making CA Certifiate
-openssl req -key /etc/pki/CA/private/cakey.pem -new -x509 -days 7300 -passin pass:root123 -out /etc/pki/CA/cacert.pem -subj "/C=BR/ST=Sao Paulo/L=Sao Paulo/O=localLab/OU=TI/CN=ca.local.lab"
+openssl req -key /etc/pki/CA/private/cakey.pem -new -x509 -days 7300 -passin pass:{{ pass_ca }} -out /etc/pki/CA/cacert.pem -subj "/C=BR/ST=Sao Paulo/L=Sao Paulo/O=localLab/OU=TI/CN=ca.local.lab"
 
 #Making Certificate Key
-openssl genrsa -aes256 -passout pass:root123 -out servkey_wp.pem
+openssl genrsa -aes256 -passout pass:{{ pass_cert }} -out servkey_wp.pem
 
 #Remove pass Key
-openssl rsa -passin pass:root123 -in servkey_wp.pem -out servkey.pem 
+openssl rsa -passin pass:{{ pass_cert }} -in servkey_wp.pem -out servkey.pem 
 
 #Generating request Certificate
-openssl req -key servkey.pem -new -passin pass:root123 -out newreq.csr -subj "/C=BR/ST=Sao Paulo/L=Sao Paulo/O=localLab/OU=TI/CN=ldap.local.lab"
+openssl req -key servkey.pem -new -passin pass:{{ pass_cert }} -out newreq.csr -subj "/C=BR/ST=Sao Paulo/L=Sao Paulo/O=localLab/OU=TI/CN=ldap.local.lab"
 
 #Sign Server Certificate
-openssl ca -days 375 -notext -passin pass:root123 -batch -in newreq.csr -out servcert.pem
+openssl ca -days 375 -notext -passin pass:{{ pass_ca }} -batch -in newreq.csr -out servcert.pem

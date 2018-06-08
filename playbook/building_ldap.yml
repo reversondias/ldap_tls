@@ -1,5 +1,9 @@
 ---
 - name: Building Openldap Server with TLS
   hosts: localhost
+  vars:
+    pass_ca: cacert123
+    pass_cert: servcert123
+    pass_ldap: ldap123
   roles:
     - ldap_tls

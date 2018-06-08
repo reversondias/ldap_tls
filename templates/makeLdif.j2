@@ -1,5 +1,5 @@
 #!/bin/bash
-PASSWD=$(slappasswd -s root123)
+PASSWD=$(slappasswd -s {{ pass_ldap }})
 
 cat <<EOF
 dn: olcDatabase={0}config,cn=config
