@@ -7,19 +7,19 @@
 
 - name: Generate Certificates
   shell: /tmp/makeCert.sh
+  args:
+    chdir: /etc/openldap/certs
 
-- name: Distribute Server Certificate
-  copy:
-    src: /tmp/servcert.pem
-    dest: /etc/openldap/certs/
-    user: ldap
+- name: Change the permissions Server Certificate
+  file:
+    path: /etc/openldap/certs/servcert.pem
+    owner: ldap
     mode: 400
 
-- name: Distribute Server Key
-  copy:
-    src: /tmp/servkey.pem
-    dest: /etc/openldap/certs/
-    user: ldap
+- name: Change the permissions Server Key
+  file:
+    path: /etc/openldap/certs/servkey.pem
+    owner: ldap
     mode: 400
 
 - name: Distribute CA Certificate
