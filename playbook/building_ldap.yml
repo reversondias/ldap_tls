@@ -1,0 +1,5 @@
+---
+- name: Building Openldap Server with TLS
+  hosts: localhost
+  roles:
+    - ldap_tls

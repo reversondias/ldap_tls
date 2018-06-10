@@ -1,0 +1,10 @@
+---
+- name: Create ldif to make ldap TLS configurations
+  template:
+    src: enable_tls.j2
+    dest: /tmp/enable_tls.ldif
+
+- name: Execute ldapmodify to config TLS
+  shell: ldapmodify -Y EXTERNAL -H ldapi:/// -f /tmp/enable_tls.ldif
+  notify:
+    - Restart slapd

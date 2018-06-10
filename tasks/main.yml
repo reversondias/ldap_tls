@@ -3,3 +3,5 @@
 # - include_tasks: install.yml
 # - include_tasks:  ldif.yml
  - include_tasks: cert.yml
+ - include_tasks: ldif_tls.yml
+ - include_tasks: apache.yml

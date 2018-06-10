@@ -13,17 +13,17 @@ dn: olcDatabase={1}monitor,cn=config
 changetype: modify
 replace: olcAccess
 olcAccess: {0}to * by dn.base="gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth"
-  read by dn.base="cn=admin,dc=goku,dc=com,dc=br" read by * none
+  read by dn.base="cn=admin,dc=local,dc=lab" read by * none
 
 dn: olcDatabase={2}hdb,cn=config
 changetype: modify
 replace: olcSuffix
-olcSuffix: dc=goku,dc=com,dc=br
+olcSuffix: dc=local,dc=lab
 
 dn: olcDatabase={2}hdb,cn=config
 changetype: modify
 replace: olcRootDN
-olcRootDN: cn=admin,dc=goku,dc=com,dc=br
+olcRootDN: cn=admin,dc=local,dc=lab
 
 dn: olcDatabase={2}hdb,cn=config
 changetype: modify
@@ -34,7 +34,7 @@ dn: olcDatabase={2}hdb,cn=config
 changetype: modify
 add: olcAccess
 olcAccess: {0}to attrs=userPassword,shadowLastChange by
-  dn="cn=admin,dc=goku,dc=com,dc=br" write by anonymous auth by self write by * none
+  dn="cn=admin,dc=local,dc=lab" write by anonymous auth by self write by * none
 olcAccess: {1}to dn.base="" by * read
-olcAccess: {2}to * by dn="cn=admin,dc=goku,dc=com,dc=br" write by * read
+olcAccess: {2}to * by dn="cn=admin,dc=local,dc=lab" write by * read
 EOF

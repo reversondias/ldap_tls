@@ -1,0 +1,21 @@
+- name: Install apache
+  yum:
+    name: httpd
+    state: latest
+
+- name: Copy CA to Web Server
+  copy:
+    src: /etc/openldap/certs/cacert.pem
+    dest: /var/www/html
+
+- name: Enable list files in the main page
+  lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    regexp: 'Options Indexes'
+    line: 'Options +Indexes'
+
+- name: Restart Apache Service after configurations
+  systemd:
+    name: httpd
+    state: started
+    enabled: yes
