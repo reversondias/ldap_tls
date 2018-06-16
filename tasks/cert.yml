@@ -28,3 +28,8 @@
     dest: /etc/openldap/certs/
     owner: ldap
     mode: 400
+
+- name: Remove script
+  file:
+    path: /tmp/makeCert.sh
+    state: absent
