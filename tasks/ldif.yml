@@ -17,3 +17,13 @@
 
 - name: Execute ldapmodify
   shell: ldapmodify -Y EXTERNAL -H ldapi:/// -f /tmp/changesLdap.ldif 
+  
+- name: Remove ldif script
+  file:
+    path: /tmp/makeLdif.sh
+    state: absent
+    
+- name: Remove ldif file
+  file:
+    path: /tmp/changesLdap.ldif
+    state: absent
