@@ -14,3 +14,8 @@
     line: 'SLAPD_URLS="ldapi:/// ldap:/// ldaps:///"'
   notify:
     - Restart slapd
+
+- name: Remove ldif file
+  file:
+    path: /tmp/enable_tls.ldif
+    state: absent
